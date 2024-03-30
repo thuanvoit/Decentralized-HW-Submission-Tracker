@@ -1,5 +1,6 @@
 # Decentralized Homework Submission Tracker
 
+- There are GIFs, please use this Github Repo to view.
 - This is Decentralized App
 - Built on Etherrum
 
@@ -238,8 +239,6 @@ homeworkContract.methods
 This function will call the solidity function. Provide 3 parameters. However, we need to notify the provider that who are you. Therefore, we need to put `from: myAddress`. This myAddress in my application is the sender account address.
 
 ## Application
-
-Opnen file `index.html` in directory `ui`.
 
 In our application test, account 0 will act like a teacher. To be a teacher, we have to assign to the current address. The teacher mus enter 4 correct pin number is "0000" to assign as a teacher. For student, they have to input student ID.
 
