@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Homework Submission Tracker</title>
+    <link rel="stylesheet" href="./node_modules/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="main.css">
+    <script src="./node_modules/web3/dist/web3.min.js"></script>
+    <link rel="icon" type="image/png" href="./block.png">
+</head>
+
+<body>
+    <div id="container" class="container d-flex flex-column justify-content-start" style="display: block;">
+        <div class="container justify-content-center d-flex mb-3 flex-column align-items-center gap-2">
+            <img src="./block.png" width="50" height="50" alt="block" class="block-logo">
+            <h4>Homework Submission Tracker</h4>
+        </div>
+        <div class="card p-3 container mb-3" id="select-account-card">
+            <h4>Account Details</h4>
+            <div class="d-flex flex-row gap-4">
+                <div class="d-flex flex-column" style="width: 50%;">
+
+                    <div class="alert alert-primary" role="alert" id="current-account""></div>
+                    <select class=" form-select" id="accounts" onchange="connectAccount()">
+                        </select>
+
+                    </div>
+
+                    <div class=" d-flex flex-column" style="width: 50%;">
+                        <div class=" alert alert-warning" role="alert" id="account-balance""></div>
+                        <div class=" alert alert-success" role="alert" id="role"></div>
+
+                    </div>
+                </div>
+
+            </div>
+
+            <div class=" card p-3 container mb-3" id="select-role-card">
+                <h2>What is your role?</h2>
+                <p>Describe yourself to get started</p>
+                <div class="btn-group mb-3" role="group">
+                    <button type="button" class="btn btn-primary" id="select-student-role"
+                        onclick="selectStudentRole()">Student</button>
+                    <button type="button" class="btn btn-danger" id="select-teacher-role"
+                        onclick="selectTeacherRole()">Teacher</button>
+                </div>
+                <div id="student-id-input">
+                    <div class="mb-3">
+                        <label class="form-label">Student Id</label>
+                        <input type="text" class="form-control" id="student-id">
+                    </div>
+                    <button type="submit" class="btn btn-primary" onclick="setStudentRole()">Set
+                        Role</button>
+                </div>
+                <div id="teacher-password-input">
+                    <div class="mb-3">
+                        <label class="form-label">Teacher Password</label>
+                        <input type="text" class="form-control" id="teacher-password">
+                    </div>
+                    <button type="submit" class="btn btn-primary" onclick="setTeacherRole()">Set
+                        Role</button>
+                </div>
+
+            </div>
+
+            <!-- TEACHER -->
+
+            <div class="card p-3 container mb-3" id="create-hw-card">
+                <h2>Create Assignment</h2>
+
+                <div class="d-flex align-items-start flex-column">
+                    <div class="form-group mb-2" style="width: 50vh;">
+                        <label class="form-label" for="assignmentName">Assignment Name:</label>
+                        <input type="text" class="form-control" id="assignmentName" required>
+                    </div>
+                    <div class="d-flex flex-row">
+                        <button type="submit" class="btn btn-primary" onclick="createAssignment()">Create</button>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="card p-3 container mb-3" id="grader-hw-card">
+                <h2>Grader</h2>
+
+                <div class="d-flex flex-row row-2 gap-4">
+                    <div style="width: 50%;">
+                        <div class="form-group mb-2">
+                            <label class="form-label">Select Assignment to Grade
+                                <span class="badge rounded-pill text-bg-primary" id="assignment-total">total
+                                    submissions</span>
+                            </label>
+                            <select class="form-select" id="grader-assignment"
+                                onchange="getAllSubmissionByAssignmentId()" onclick="getAllHWs()">
+                            </select>
+                        </div>
+                        <div class="form-group mb-2">
+
+                            <label class="form-label">Select Submission to Grade
+                                <span class="badge rounded-pill text-bg-primary" id="assignment-total-submission">total
+                                    submissions</span>
+                            </label>
+                            <select class="form-select" size="10" id="grader-submission" onchange="getSubmissionById()">
+                            </select>
+                        </div>
+                    </div>
+                    <div id="submission-details" class="rounded-3 d-flex flex-column gap-1 p-2"
+                        style="width: 50%; background-color: #f2f2f2;">
+                        <div><strong>Student Id: </strong><span id="sd-studentid"></span></div>
+                        <div><strong>Submission Datetime: </strong><span id="sd-datetime"></span></div>
+                        <div><strong>File hash: </strong><span id="sd-filehash"></span></div>
+                        <!-- <div>Comment: <span id="sd-comment"></span></div> -->
+                        <div class="form-group d-flex flex-column mb-2">
+                            <label class="form-label" for="submission-grade"><strong>Comment: </strong></label>
+                            <input type="text" class="form-control" id="sd-comment" disabled>
+                        </div>
+                        <div class="form-group d-flex flex-row gap-2 align-items-center">
+                            <label class="form-label" for="submission-grade"><strong>Grade: </strong></label>
+                            <input type="text" class="form-control" id="sd-grade" style="width: 4rem"
+                                onkeyup="readyToSave()">
+                            <span>/100</span>
+                        </div>
+                        <div class="form-group d-flex flex-column gap-2 align-items-start">
+                            <label class="form-label" for="submission-feedback"><strong>Feedback: </strong></label>
+                            <input type="text" class="form-control" id="sd-feedback" value="0">
+                        </div>
+
+                        <button class="btn btn-primary" type="button" id="save-grade" onclick="saveGrade()"
+                            disabled>Save</button>
+
+                    </div>
+                </div>
+
+
+
+            </div>
+
+
+            <div class="card p-3 container mb-3" id="submit-hw-card">
+                <h2>Submit Your Homework</h2>
+                <div class="d-flex justify-content-center">
+                    <form class="form-group" name="submit-hw-form">
+                        <div class="d-flex flex-column gap-2" style="width: 50vh;">
+                            <select class="form-select mb-2" id="homeworks" required>
+                            </select>
+                            <div class="input-group">
+                                <input type="file" class="form-control" id="submission-file" required>
+                                <label class="input-group-text">Upload</label>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label" for="submission-comment">Comment:</label>
+                                <input type="text" class="form-control" id="submission-comment">
+                            </div>
+
+                            <div class="d-flex flex-row">
+                                <button class="btn btn-primary" type="button" onclick="submitHomework()">Submit</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+
+            <div class="card p-3 container mb-3" id="my-hw-card">
+                <h2>View My Submission History</h2>
+
+                <div class="d-flex flex-row row-2 gap-4">
+                    <div style="width: 50%;">
+                        <button class="btn btn-primary" type="button" onclick="getAllMySubmissions()">Refresh</button>
+                        <div class="form-group mb-2">
+
+                            <label class="form-label">Select Submission to View</label>
+                            <select class="form-select" size="10" id="my-submissions" onchange="getMySubmissionById()">
+
+                            </select>
+                        </div>
+                    </div>
+                    <div id="my-submission-details" class="rounded-3 d-flex flex-column gap-1 p-2"
+                        style="width: 50%; background-color: #f2f2f2;">
+                        <div><strong>Student Id: </strong><span id="my-sd-studentid"></span></div>
+                        <div><strong>Submission Datetime: </strong><span id="my-sd-datetime"></span></div>
+                        <div><strong>File hash: </strong><span id="my-sd-filehash"></span></div>
+                        <!-- <div>Comment: <span id="sd-comment"></span></div> -->
+                        <div class="form-group d-flex flex-column mb-2">
+                            <label class="form-label" for="submission-grade"><strong>Comment: </strong></label>
+                            <input type="text" class="form-control" id="my-sd-comment" disabled>
+                        </div>
+                        <div class="form-group d-flex flex-row gap-2 align-items-center">
+                            <label class="form-label" for="submission-grade"><strong>Grade: </strong></label>
+                            <input type="text" class="form-control" id="my-sd-grade" style="width: 4rem" disabled>
+                            <span>/100</span>
+                        </div>
+                        <div class="form-group d-flex flex-column gap-2 align-items-start">
+                            <label class="form-label" for="submission-feedback"><strong>Feedback: </strong></label>
+                            <input type="text" class="form-control" id="my-sd-feedback" value="0" disabled>
+                        </div>
+
+                    </div>
+                </div>
+
+
+
+            </div>
+
+
+
+
+
+
+
+        </div>
+
+
+
+
+
+
+
+        <script>
+            // JavaScript to display the container after DOM is loaded
+            document.addEventListener("DOMContentLoaded", function () {
+                document.getElementById("container").style.display = "block";
+            });
+        </script>
+
+        <script src="./node_modules/jquery/dist/jquery.slim.min.js"></script>
+
+
+
+        <script src="./contract.js"></script>
+
+        <script src="./web.js"></script>
+
+
+</body>
+
+</html>

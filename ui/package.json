@@ -1,0 +1,16 @@
+{
+  "name": "hw-submission-tracker",
+  "version": "1.0.0",
+  "description": "Homework Submission Tracker",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bootstrap": "^5.3.3",
+    "jquery": "^3.7.1",
+    "web3": "^4.7.0"
+  }
+}
