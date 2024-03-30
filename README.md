@@ -1,7 +1,7 @@
 # Decentralized Homework Submission Tracker
 
--   This is Decentralized App
--   Built on Etherrum
+- This is Decentralized App
+- Built on Etherrum
 
 ## Setup Development Environment
 
@@ -11,23 +11,23 @@
 
 ### Vocabulary
 
--   Gas: refers to the unit used to measure the computational effort need for transactions on the Ethereum network. Each operation in a smart contract requires a certain amount of gas to be executed.
+- Gas: refers to the unit used to measure the computational effort need for transactions on the Ethereum network. Each operation in a smart contract requires a certain amount of gas to be executed.
 
--   Gas Limit: when you deploy a smart contract on Remix, you can specify GAS LIMIT. This is important because it prevents infinite loops and other malicious behavior by ensuring that computations have a finite cost.
+- Gas Limit: when you deploy a smart contract on Remix, you can specify GAS LIMIT. This is important because it prevents infinite loops and other malicious behavior by ensuring that computations have a finite cost.
 
--   Gas Fees: Every operation or transaction on the Ethereum blockchain requires a certain amount of gas. Gas fees are calculated based on the computational resources required to execute the operation or transaction.
+- Gas Fees: Every operation or transaction on the Ethereum blockchain requires a certain amount of gas. Gas fees are calculated based on the computational resources required to execute the operation or transaction.
 
 ### Requirements
 
--   Latest Node and NPM
--   Ganache from [https://archive.trufflesuite.com/ganache/](https://archive.trufflesuite.com/ganache/)
--   Ganache CLI in Docker (optional)
-    -   Use the provided [Dockerfile](./Dockerfile)
--   Docker (optional)
+- Latest Node and NPM
+- Ganache from [https://archive.trufflesuite.com/ganache/](https://archive.trufflesuite.com/ganache/)
+- Ganache CLI in Docker (optional)
+  - Use the provided [Dockerfile](./Dockerfile)
+- Docker (optional)
 
 ### Assumptions:
 
--   The project has the uploading file and hash file. However, due to the unnecessary of the uploading file to the bucket like AWS, I simplify the process by obtaining a SHA256 hash of the file, and assume the file has been uploaded to the bucket.
+- The project has the uploading file and hash file. However, due to the unnecessary of the uploading file to the bucket like AWS, I simplify the process by obtaining a SHA256 hash of the file, and assume the file has been uploaded to the bucket.
 
 ### Setup Ganache CLI with Docker
 
@@ -80,9 +80,9 @@ Save the Ganache HTTP Provider Endpoint on for later.
 
 ### Setup Ganache from their website
 
--   Download from [https://archive.trufflesuite.com/ganache/](https://archive.trufflesuite.com/ganache/)
+- Download from [https://archive.trufflesuite.com/ganache/](https://archive.trufflesuite.com/ganache/)
 
--   After installing and creating a workspace, the user interface should provide all information such as HTTP Endpoint.
+- After installing and creating a workspace, the user interface should provide all information such as HTTP Endpoint.
 
 <img src="./img/ganache.png" width=800 />
 
@@ -150,17 +150,17 @@ Once it's complete, we have all the meterials to run the application.
 
 The smart contract, named HomeworkContract, visualize interactions between students and teachers regarding homework submissions. It includes the following functionalities:
 
--   Role-based access control for students and teachers.
--   Assignment creation and submission.
--   Submission grading and feedback.
+- Role-based access control for students and teachers.
+- Assignment creation and submission.
+- Submission grading and feedback.
 
 ### Some basic functions:
 
--   Role Assignment: Use the `assignTeacher` and `assignStudent` functions to assign roles to teachers and students respectively.
--   Assignment Creation: Teachers can create assignments using the `createAssignment` function.
--   Submission: Students can submit their homework using the `submit` function.
--   Grading: Teachers can grade submissions and provide feedback using the `gradeSubmission` function.
--   Accessing Data: Use various getter functions to retrieve submission details, assignments, and submission counts.
+- Role Assignment: Use the `assignTeacher` and `assignStudent` functions to assign roles to teachers and students respectively.
+- Assignment Creation: Teachers can create assignments using the `createAssignment` function.
+- Submission: Students can submit their homework using the `submit` function.
+- Grading: Teachers can grade submissions and provide feedback using the `gradeSubmission` function.
+- Accessing Data: Use various getter functions to retrieve submission details, assignments, and submission counts.
 
 ### Some basic definitions:
 
@@ -206,12 +206,12 @@ function getSubmissionById(uint256 _submissionId)
     }
 ```
 
--   Function name: getSubmissionById
--   1 parameter of type unsigned int256
--   Public function
--   Restrict to modifer onlyTeacher
--   This is a returns function (return a Homework struct)
--   It will perform looking submission by its ID
+- Function name: getSubmissionById
+- 1 parameter of type unsigned int256
+- Public function
+- Restrict to modifer onlyTeacher
+- This is a returns function (return a Homework struct)
+- It will perform looking submission by its ID
 
 ### Build Web3.js App
 
@@ -225,45 +225,47 @@ If we would like to call submit Grade, we can use:
 
 ```js
 homeworkContract.methods
-    .gradeSubmission(submissionId, grade, feedback)
-    .send({ from: myAddress, gas: "1000000" })
-    .then((receipt) => {
-        createAlert("submission-details", "Grade and feedback saved.");
-    })
-    .catch((error) => {
-        console.error("Error:", error);
-    });
+  .gradeSubmission(submissionId, grade, feedback)
+  .send({ from: myAddress, gas: "1000000" })
+  .then((receipt) => {
+    createAlert("submission-details", "Grade and feedback saved.");
+  })
+  .catch((error) => {
+    console.error("Error:", error);
+  });
 ```
 
 This function will call the solidity function. Provide 3 parameters. However, we need to notify the provider that who are you. Therefore, we need to put `from: myAddress`. This myAddress in my application is the sender account address.
 
 ## Application
 
+Opnen file `index.html` in directory `ui`.
+
 In our application test, account 0 will act like a teacher. To be a teacher, we have to assign to the current address. The teacher mus enter 4 correct pin number is "0000" to assign as a teacher. For student, they have to input student ID.
 
 ### Teacher role
 
--   Can create new assignment and grade assignments.
+- Can create new assignment and grade assignments.
 
 <img src="./img/app-1.png" width=800 />
 
 ### Student role
 
--   Can only submit homework and get all past submissions.
+- Can only submit homework and get all past submissions.
 
 <img src="./img/app-2.png" width=800 />
 
 ## Some basic tasks (It's GIF, please use Github Readme to view)
 
--   Teacher can add assignments:
+- Teacher can add assignments:
 
 <img src="./img/teacher-add.gif" width=500 />
 
--   Student can submit assignments:
+- Student can submit assignments:
 
 <img src="./img/student-submit.gif" width=500 />
 
--   Teacher can grade and students can view assignments:
+- Teacher can grade and students can view assignments:
 
 <img src="./img/teacher-grade.gif" width=500 />
 
@@ -288,8 +290,8 @@ Compare gas used:
 | Assign Student Role | High (1 string) | - | 67653 |
 | Assign Teacher Role | High (1 string) | - | 45602 |
 
--   **String Parameter Impact**: Functions that involve string parameters generally consume more gas compared to those without string parameters.
--   **Parameter Complexity Impact**: Gas usage tends to increase with the complexity of parameters other than strings. For instance, the gas used for tasks involving both string and other parameters (e.g., grade with feedback) is higher compared to tasks with only string parameters (e.g., assigning roles).
+- **String Parameter Impact**: Functions that involve string parameters generally consume more gas compared to those without string parameters.
+- **Parameter Complexity Impact**: Gas usage tends to increase with the complexity of parameters other than strings. For instance, the gas used for tasks involving both string and other parameters (e.g., grade with feedback) is higher compared to tasks with only string parameters (e.g., assigning roles).
 
 However, the last 2 cases, assign student and assign teacher sending 1 string parameter. They look the same in terms of parameters but the gas used is significantly different.
 
@@ -313,13 +315,13 @@ However, the last 2 cases, assign student and assign teacher sending 1 string pa
 
 Sometimes, the function couldn't run due to gas limit on javascript. There are several ways to deal with this:
 
--   Optimize operations to take less gas
--   Give the operation more gas (like via Javascript) and make sure not exceed gas limit in Ganache
-    ````javascript
-    homeworkContract.methods
-            .submit(homeworkId, timestamp, hash, comment)
-            .send({ from: myAddress, gas: "1000000" })
-            ```
-    ````
+- Optimize operations to take less gas
+- Give the operation more gas (like via Javascript) and make sure not exceed gas limit in Ganache
+  ````javascript
+  homeworkContract.methods
+          .submit(homeworkId, timestamp, hash, comment)
+          .send({ from: myAddress, gas: "1000000" })
+          ```
+  ````
 
 By following this tutorial, you will gain hands-on experience in creating a smart contract for managing homework submissions on the Ethereum blockchain. This contract can help building more complex educational apps or decentralized educational-related apps like feedback system, peer review platform, etc.
